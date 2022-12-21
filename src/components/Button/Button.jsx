@@ -7,5 +7,7 @@ export const Button = ({ loadMore }) => {
   );
 };
 
-Button.propTypes = {};
+Button.propTypes = {
+  loadMore: PropTypes.func.isRequired,
+};
 

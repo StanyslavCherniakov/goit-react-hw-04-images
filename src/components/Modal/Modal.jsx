@@ -4,6 +4,11 @@ import { Overlay, ModalWindow } from './Modal.styled';
 
 export class Modal extends Component {
 
+  static propTypes = {
+    image: PropTypes.string.isRequired,
+    onModalClose: PropTypes.func.isRequired,
+  };
+
   closeModalOnEsc = e => {
     if (e.code === 'Escape') {
       this.props.onModalClose('');
@@ -25,17 +30,17 @@ export class Modal extends Component {
   }
 
   render() {
+    const { image } = this.props;
     return (
       <Overlay className='overlay' onClick={this.handleBackDropClick}>
         <ModalWindow className='modal'>
-          <img src={this.props.image} alt='' />
+          <img src={image} alt='' />
         </ModalWindow>
       </Overlay>
     );
   }
 }
 
-Modal.propTypes = {};
 
 
 
