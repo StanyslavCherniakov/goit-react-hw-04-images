@@ -1,13 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { ImageGalleryItem } from '../ImageGalleryItem/ImageGalleryItem';
+import { Search } from './ImageGallery.styled';
 
 export const ImageGallery = ({ galleryItems, ...otherProps }) => {
   return (
-    <ul className='gallery'>
+    <Search>
       {galleryItems.map(({ id, webformatURL, largeImageURL }) => <ImageGalleryItem
         key={id} smallImg={webformatURL} largeImg={largeImageURL} {...otherProps} />)}
-    </ul>
+    </Search>
   );
 };
 

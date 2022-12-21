@@ -4,6 +4,7 @@ import { ImageGallery } from './ImageGallery/ImageGallery';
 import { Loader } from './Loader/Loader';
 import { Button } from './Button/Button';
 import { Modal } from './Modal/Modal';
+import { Wrapper } from './App.styled';
 
 import { fetchImages } from '../services/api-service';
 import { ToastContainer, toast } from 'react-toastify';
@@ -69,14 +70,14 @@ export class App extends Component {
 
   render() {
     const { status, modalImg, galleryItems } = this.state;
-    return (<div>
+    return (<Wrapper>
       <Searchbar onSubmit={this.handleFormSubmit} />
       <ImageGallery galleryItems={galleryItems} onClick={this.handleModal} />
       {status === 'loading' && <Loader />}
       {status === 'loaded' && <Button loadMore={this.loadMore} />}
       {modalImg && <Modal image={modalImg} onModalClose={this.handleModal} />}
       <ToastContainer />
-    </div>);
+    </Wrapper>);
   }
 }
 

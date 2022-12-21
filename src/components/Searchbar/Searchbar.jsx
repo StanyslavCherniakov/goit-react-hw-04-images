@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Formik, Form, Field } from 'formik';
+import { Formik } from 'formik';
+import { BsSearch } from 'react-icons/bs';
+import { Search, SearchForm, SearchFormBtn, Input } from './Searchbar.styled';
 
 export const Searchbar = ({ onSubmit }) => {
 
@@ -8,15 +10,15 @@ export const Searchbar = ({ onSubmit }) => {
     onSubmit(values);
     actions.resetForm();
   };
-  return (
-    <header className='searchbar'>
-      <Formik initialValues={{ search: '' }} onSubmit={handleSubmit}>
-        <Form className='form'>
-          <button type='submit' className='button'>
-            <span className='button-label'>Search</span>
-          </button>
 
-          <Field
+  return (
+    <Search>
+      <Formik initialValues={{ search: '' }} onSubmit={handleSubmit}>
+        <SearchForm>
+          <SearchFormBtn type='submit'>
+            <BsSearch size='20px' />
+          </SearchFormBtn>
+          <Input
             name='search'
             className='input'
             type='text'
@@ -24,9 +26,9 @@ export const Searchbar = ({ onSubmit }) => {
             autoFocus
             placeholder='Search images and photos'
           />
-        </Form>
+        </SearchForm>
       </Formik>
-    </header>
+    </Search>
   );
 };
 
