@@ -42,14 +42,14 @@ export class App extends Component {
     this.setState(prevState => ({ page: prevState.page + 1 }));
   };
 
-  onImageClick = (image) => {
+  handleModal = (image) => {
     this.setState({ modalImg: image });
   };
 
   render() {
     return (<div>
       <Searchbar onSubmit={this.handleFormSubmit} />
-      <ImageGallery galleryItems={this.state.galleryItems} onClick={this.onImageClick} />
+      <ImageGallery galleryItems={this.state.galleryItems} onClick={this.handleModal} />
       {this.state.status === 'loading' && <RotatingLines
         strokeColor='grey'
         strokeWidth='5'
@@ -58,7 +58,7 @@ export class App extends Component {
         visible={true}
       />}
       {this.state.status === 'loaded' && <Button loadMore={this.loadMore} />}
-      {this.state.modalImg && <Modal image={this.state.modalImg} />}
+      {this.state.modalImg && <Modal image={this.state.modalImg} onModalClose={this.handleModal} />}
     </div>);
   }
 }
