@@ -15,18 +15,28 @@ export class App extends Component {
     modalImg: '',
     page: 1,
     status: 'start',
+    error: null,
   };
 
   async componentDidUpdate(prevProps, prevState) {
-    if (prevState.searchQuerry !== this.state.searchQuerry || prevState.page !== this.state.page) {
-      this.setState({ status: 'loading' });
-      const res = await fetchImages(this.state.searchQuerry, this.state.page);
-      this.setState((prevState) => (
-        {
-          galleryItems: [...prevState.galleryItems, ...res.data.hits],
-          status: 'loaded',
+    try {
+      if (prevState.searchQuerry !== this.state.searchQuerry || prevState.page !== this.state.page) {
+        this.setState({ status: 'loading' });
+        const res = await fetchImages(this.state.searchQuerry, this.state.page);
+        if (res.data.total === 0) {
+          throw new Error('Images with your querry was not found');
         }
-      ));
+        this.setState((prevState) => (
+          {
+            galleryItems: [...prevState.galleryItems, ...res.data.hits],
+            status: 'loaded',
+          }
+        ));
+      }
+    } catch (error) {
+      console.dir(error);
+      this.setState({ status: 'start', error: error.message });
+
     }
   }
 
