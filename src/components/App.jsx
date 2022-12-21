@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Searchbar } from './Searchbar/Searchbar';
 import { ImageGallery } from './ImageGallery/ImageGallery';
 import { Button } from './Button/Button';
+import { Modal } from './Modal/Modal';
 
 import { fetchImages } from '../services/api-service';
 import { RotatingLines } from 'react-loader-spinner';
@@ -11,6 +12,7 @@ export class App extends Component {
   state = {
     searchQuerry: '',
     galleryItems: [],
+    modalImg: '',
     page: 1,
     status: 'start',
   };
@@ -40,10 +42,14 @@ export class App extends Component {
     this.setState(prevState => ({ page: prevState.page + 1 }));
   };
 
+  onImageClick = (image) => {
+    this.setState({ modalImg: image });
+  };
+
   render() {
     return (<div>
       <Searchbar onSubmit={this.handleFormSubmit} />
-      <ImageGallery galleryItems={this.state.galleryItems} />
+      <ImageGallery galleryItems={this.state.galleryItems} onClick={this.onImageClick} />
       {this.state.status === 'loading' && <RotatingLines
         strokeColor='grey'
         strokeWidth='5'
@@ -52,6 +58,7 @@ export class App extends Component {
         visible={true}
       />}
       {this.state.status === 'loaded' && <Button loadMore={this.loadMore} />}
+      {this.state.modalImg && <Modal image={this.state.modalImg} />}
     </div>);
   }
 }
