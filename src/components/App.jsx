@@ -31,7 +31,7 @@ export class App extends Component {
         }
         this.setState((prevState) => (
           {
-            galleryItems: [...prevState.galleryItems, ...res.data.hits],
+            galleryItems: [...prevState.galleryItems, ...this.getGalleryItems(res.data.hits)],
             status: 'loaded',
           }
         ));
@@ -68,11 +68,18 @@ export class App extends Component {
     this.setState({ modalImg: image });
   };
 
+  getGalleryItems = (data) => {
+    return data.map(el => ({
+      id: el.id, webformatURL: el.webformatURL, largeImageURL: el.largeImageURL,
+    }));
+
+  };
+
   render() {
     const { status, modalImg, galleryItems } = this.state;
     return (<Wrapper>
       <Searchbar onSubmit={this.handleFormSubmit} />
-      <ImageGallery galleryItems={galleryItems} onClick={this.handleModal} />
+      {galleryItems.length > 0 && <ImageGallery galleryItems={galleryItems} onClick={this.handleModal} />}
       {status === 'loading' && <Loader />}
       {status === 'loaded' && <Button loadMore={this.loadMore} />}
       {modalImg && <Modal image={modalImg} onModalClose={this.handleModal} />}
