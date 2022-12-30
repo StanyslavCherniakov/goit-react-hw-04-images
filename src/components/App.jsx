@@ -9,6 +9,7 @@ import { Wrapper } from './App.styled';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
+import * as Scroll from 'react-scroll';
 
 export const App = props => {
 
@@ -48,6 +49,19 @@ export const App = props => {
     };
     fetchImages(search, page);
   }, [search, page]);
+
+  //Autoscroll
+  useEffect(() => {
+    if (search === '' || page === 1) {
+      return;
+    }
+    const scroll = Scroll.animateScroll;
+    scroll.scrollTo(document.documentElement.scrollHeight - 150, {
+      duration: 1500,
+      delay: 100,
+      smooth: 'easeInOutCubic',
+    });
+  }, [page, search]);
 
   const handleFormSubmit = (value) => {
     setSearch(value.search);
