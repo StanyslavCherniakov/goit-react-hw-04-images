@@ -21,6 +21,7 @@ export const App = props => {
 
   useEffect(() => {
     if (search === '') {
+      setStatus('start');
       return;
     }
     const fetchImages = async (search, page) => {
